@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17122d">
+  <meta name="description" content="スマブラSP ゼルダの全技フレーム・ダメージ・用途・撃墜・コンボ・キャラ性能をまとめた実戦向けデータベース。">
+  <title>ZELDA LAB｜スマブラSP ゼルダ全技データ</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a" aria-hidden="true"></div>
+  <div class="ambient ambient-b" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="ZELDA LAB トップ">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><strong>ZELDA LAB</strong><small>SUPER SMASH BROS. ULTIMATE</small></span>
+    </a>
+    <button class="icon-button" id="themeToggle" type="button" aria-label="表示テーマを切り替える" title="表示テーマを切り替える">
+      <span aria-hidden="true">◐</span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow">FIGHTER #17 · DATA FOR VERSION 13.0.1</p>
+        <h1>ゼルダの技を、<br><span>「いつ振るか」まで。</span></h1>
+        <p class="hero-lead">発生・持続・全体・ダメージだけでなく、使うべき状況、避けたい使い方、撃墜・コンボ導線まで一つの画面で確認できる実戦用データベース。</p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#moves">全技を見る</a>
+          <button class="secondary-button" type="button" data-quick-filter="崖">崖で使う技</button>
+          <button class="secondary-button" type="button" data-quick-filter="撃墜">撃墜技だけ</button>
+        </div>
+      </div>
+      <div class="hero-dashboard" aria-label="ゼルダ主要データ">
+        <div class="hero-score">
+          <span>競技ティア順位</span>
+          <strong>73<small>/82</small></strong>
+          <em>D+ TIER</em>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>最速技</dt><dd>弱攻撃 <b>4F</b></dd></div>
+          <div><dt>最速スマッシュ</dt><dd>下スマ <b>5F</b></dd></div>
+          <div><dt>最速空中攻撃</dt><dd>空N / 空前 / 空後 <b>6F</b></dd></div>
+          <div><dt>最速ガーキャン</dt><dd>上B <b>6F</b></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="section-nav" aria-label="ページ内メニュー">
+      <div class="shell section-nav-inner">
+        <a href="#overview">戦い方</a>
+        <a href="#moves">全技データ</a>
+        <a href="#situations">状況別</a>
+        <a href="#stats">キャラ性能</a>
+        <a href="#sources">出典</a>
+      </div>
+    </nav>
+
+    <section class="section shell" id="overview">
+      <div class="section-heading">
+        <div><p class="eyebrow">GAME PLAN</p><h2>ゼルダの勝ち筋</h2></div>
+        <p>速さで触りに行くキャラではない。ファントムで相手の選択肢を狭め、読み合いを単純化してから、強い一撃を当てる。</p>
+      </div>
+      <div class="gameplan-grid" id="gameplanGrid"></div>
+    </section>
+
+    <section class="section shell" id="moves">
+      <div class="section-heading move-heading">
+        <div><p class="eyebrow">COMPLETE MOVESET</p><h2>全技データ</h2></div>
+        <div class="view-switch" role="group" aria-label="表示形式">
+          <button class="is-active" type="button" data-view="cards">カード</button>
+          <button type="button" data-view="table">表</button>
+        </div>
+      </div>
+
+      <div class="filter-panel">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="moveSearch" type="search" placeholder="技名・用途・状況で検索（例：対空、崖、反射）" autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+        <div class="filter-row" id="categoryFilters" aria-label="技カテゴリ"></div>
+        <div class="filter-row filter-row-sub" id="situationFilters" aria-label="用途"></div>
+        <div class="filter-tools">
+          <label>並び順
+            <select id="sortSelect">
+              <option value="default">基本順</option>
+              <option value="startup">発生が速い順</option>
+              <option value="damage">最大ダメージ順</option>
+              <option value="risk">リスクが低い順</option>
+            </select>
+          </label>
+          <button id="favoriteFilter" class="favorite-filter" type="button" aria-pressed="false">★ お気に入り</button>
+          <button id="resetFilters" class="text-button" type="button">条件をリセット</button>
+        </div>
+      </div>
+
+      <div class="result-meta"><strong id="resultCount">0</strong>技を表示 <span id="activeFilterText"></span></div>
+      <div id="movesCards" class="moves-grid"></div>
+      <div id="movesTable" class="table-wrap" hidden></div>
+      <div id="emptyState" class="empty-state" hidden>
+        <strong>該当する技がありません</strong>
+        <p>検索語かフィルターを変えてください。</p>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="situations">
+      <div class="shell">
+        <div class="section-heading section-heading-light">
+          <div><p class="eyebrow">SITUATION MAP</p><h2>状況から逆引き</h2></div>
+          <p>「この技は何に使うか」ではなく、「今この状況で何を使うか」から探す。</p>
+        </div>
+        <div class="situation-grid" id="situationGrid"></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="stats">
+      <div class="section-heading">
+        <div><p class="eyebrow">FIGHTER PROFILE</p><h2>キャラ性能と全体順位</h2></div>
+        <p>絶対値だけでなく、全82ファイター内での位置づけを併記。順位は同値キャラを含むため、帯・同率表記も使う。</p>
+      </div>
+      <div class="profile-summary" id="profileSummary"></div>
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="strength-grid" id="strengthGrid"></div>
+    </section>
+
+    <section class="section shell sources" id="sources">
+      <div class="section-heading">
+        <div><p class="eyebrow">METHODOLOGY</p><h2>読み方・出典</h2></div>
+        <p>数値と攻略判断を分離し、フレーム値は公開データ、用途評価は技の性質から整理。</p>
+      </div>
+      <div class="sources-grid">
+        <article>
+          <h3>数値の基準</h3>
+          <p>ダメージは原則として1on1補正前の基礎値。発生は最初の攻撃判定が出るフレーム。全体は入力開始から行動可能になるまで。空中技の「着地」は着地隙。</p>
+        </article>
+        <article>
+          <h3>主要ソース</h3>
+          <ul>
+            <li><a href="https://ultimateframedata.com/zelda" target="_blank" rel="noreferrer">Ultimate Frame Data — Zelda</a></li>
+            <li><a href="https://www.ssbwiki.com/Zelda_(SSBU)" target="_blank" rel="noreferrer">SmashWiki — Zelda (SSBU)</a></li>
+            <li><a href="https://www.ssbwiki.com/List_of_fighters_by_tier_list" target="_blank" rel="noreferrer">SmashWiki — Tier list</a></li>
+          </ul>
+        </article>
+        <article>
+          <h3>注意</h3>
+          <p>撃墜％や確定帯は、ステージ、相手の体重、位置、ベクトル変更、ほかほか補正で変化する。記載は代表的な目安として扱うこと。</p>
+        </article>
+      </div>
+      <p class="update-note">最終データ確認：2026-07-13 ／ 対象バージョン：13.0.1 ／ 非公式ファンメイド</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell"><span>ZELDA LAB</span><p>Made for learning. Nintendo / Sora Ltd. / Bandai Namco Studiosとは関係ありません。</p></div>
+  </footer>
+
+  <dialog id="moveDialog" class="move-dialog">
+    <button class="dialog-close" type="button" aria-label="閉じる">×</button>
+    <div id="dialogContent"></div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
