@@ -1,4 +1,4 @@
-const CACHE = "zelda-lab-v2";
+const CACHE = "zelda-lab-v3";
 const ASSETS = ["./", "./index.html", "./styles.css", "./guides.css", "./data.js", "./app.js", "./guides.js", "./icon.svg", "./manifest.webmanifest"];
 self.addEventListener("install", (event) => event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS))));
 self.addEventListener("activate", (event) => event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))));
