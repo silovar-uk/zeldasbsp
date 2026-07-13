@@ -9,6 +9,7 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="guides.css">
 </head>
 <body>
   <div class="ambient ambient-a" aria-hidden="true"></div>
@@ -54,6 +55,7 @@
     <nav class="section-nav" aria-label="ページ内メニュー">
       <div class="shell section-nav-inner">
         <a href="#overview">戦い方</a>
+        <a href="#visual-guides">画像ガイド</a>
         <a href="#moves">全技データ</a>
         <a href="#situations">状況別</a>
         <a href="#stats">キャラ性能</a>
@@ -67,6 +69,44 @@
         <p>速さで触りに行くキャラではない。ファントムで相手の選択肢を狭め、読み合いを単純化してから、強い一撃を当てる。</p>
       </div>
       <div class="gameplan-grid" id="gameplanGrid"></div>
+    </section>
+
+    <section class="section shell visual-guides" id="visual-guides">
+      <div class="section-heading guide-heading">
+        <div><p class="eyebrow">VISUAL GAME PLAN</p><h2>立ち回りを画像で見る</h2></div>
+        <p>12のテーマを1枚ずつ確認できる図解シリーズ。必要なときだけ開けるよう、通常はコンパクトに収納。</p>
+      </div>
+
+      <details class="guide-drawer" id="guideDrawer">
+        <summary>
+          <span class="guide-summary-copy">
+            <b>立ち回り画像ガイド 全12枚</b>
+            <small>左右ボタン・番号・スワイプで切り替え。画像を押すと拡大。</small>
+          </span>
+          <span class="guide-summary-action">画像を見る <span aria-hidden="true">⌄</span></span>
+        </summary>
+
+        <div class="guide-carousel" id="guideCarousel" tabindex="0" aria-label="立ち回り画像ガイド">
+          <div class="guide-toolbar">
+            <div class="guide-meta" aria-live="polite">
+              <span id="guideCounter">01 / 12</span>
+              <strong id="guideTitle">まず、近づかせない</strong>
+            </div>
+            <div class="guide-controls">
+              <button class="guide-control" id="guidePrevious" type="button" aria-label="前の画像">←</button>
+              <button class="guide-control" id="guideNext" type="button" aria-label="次の画像">→</button>
+            </div>
+          </div>
+
+          <button class="guide-stage" id="guideOpen" type="button" aria-label="画像を拡大表示">
+            <span class="guide-loader" id="guideLoader">画像を読み込んでいます…</span>
+            <img id="guideImage" alt="" width="600" height="750" decoding="async" hidden>
+          </button>
+
+          <div class="guide-dots" id="guideDots" role="tablist" aria-label="画像番号"></div>
+          <p class="guide-note">非公式の学習用図解です。公式ロゴ・公式ゲーム画面・公式UIは使用していません。</p>
+        </div>
+      </details>
     </section>
 
     <section class="section shell" id="moves">
@@ -165,7 +205,14 @@
     <div id="dialogContent"></div>
   </dialog>
 
+  <dialog id="guideDialog" class="guide-dialog">
+    <button class="guide-dialog-close" id="guideDialogClose" type="button" aria-label="拡大画像を閉じる">×</button>
+    <img id="guideDialogImage" alt="">
+    <p id="guideDialogCaption"></p>
+  </dialog>
+
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script src="guides.js"></script>
 </body>
 </html>
